@@ -1,2 +1,3 @@
 # Google-SERP-Analyzer
-Application that provide chart for domains positions for specific phrases
+>Application that provide charts for domains positions for specific phrases
+App in progress...
