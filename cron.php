@@ -13,9 +13,11 @@ curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($c, CURLOPT_HEADER, 0);
 curl_setopt($c, CURLOPT_SSL_VERIFYHOST, false);
 curl_setopt($c, CURLOPT_SSL_VERIFYPEER, false);
-curl_setopt($c, CURLOPT_URL, "https://www.google.com/search?q=phr&ie=utf-8&oe=utf-8&num=100&client=firefox-b-ab");
+curl_setopt($c, CURLOPT_URL, "https://www.google.com/search?q=pizza&ie=utf-8&oe=utf-8&num=10&client=firefox-b-ab");
 
 $pages = curl_exec($c);
 curl_close($c);
+
+echo $pages;
 
 echo GetMemoryUsage(memory_get_usage()).PHP_EOL;
