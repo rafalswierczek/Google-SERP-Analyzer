@@ -9,7 +9,3 @@
 	<title>GSA project</title>
 </head>
 <body>
-	<h1>building...</h1>
-</body>
-</html>
-
