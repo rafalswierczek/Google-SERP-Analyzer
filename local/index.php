@@ -1,11 +1,15 @@
 <?php
-// dirname(__FILE__)
+
 if(!file_exists("db.ini"))
 {
-	//header("location: config.php");
+	header("location: config/config.php");
 }
 
 require_once("header.php");
-echo "bodyyy";
+?>
+
+
+
+<?php
 require_once("footer.php");
 ?>
