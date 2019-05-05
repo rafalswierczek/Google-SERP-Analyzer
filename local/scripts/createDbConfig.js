@@ -4,16 +4,16 @@ window.addEventListener("load", function()
 	formDbConfig.addEventListener("submit", async function(e)
 	{
 		e.preventDefault();
-		const response = await fetch("../config/createDbConfig.php", {method: "POST", body: new FormData(this)});
+		const response = await fetch("createDbConfig.php", {method: "POST", body: new FormData(this)});
 		const responseData = await response.text();
 		
 		if(responseData === "true")
 		{
-			console.log("Utworzono połączenie z bazą danych. Teraz nastąpi przekierowanie."); // implementacja prostego systemu powiadomień
+			console.log("Utworzono połączenie z bazą danych."); // implementacja prostego systemu powiadomień
 			setTimeout(function()
 			{
-				location = "../index.php";
-			}, 4000);
+				location = "addProxy.php";
+			}, 2000);
 		}
 		else
 		{
