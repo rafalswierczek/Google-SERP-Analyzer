@@ -37,11 +37,15 @@ INI;
 				die("Nie można było utworzyć pliku `db.ini`: ".$e->getMessage());
 			}
 
-			$result = Db::query("CREATE TABLE IF NOT EXISTS `proxies` (`id` TINYINT NOT NULL, `ip` VARCHAR(15) NOT NULL, `port` VARCHAR(30) NOT NULL, PRIMARY KEY (`id`, `ip`))");
-			if($result)
-				die("true");
-			else
-				die("Nie można było utworzyć tabeli `proxies`");
+			$proxiesQuery = Db::query("CREATE TABLE IF NOT EXISTS `proxies` (`id` TINYINT UNSIGNED NOT NULL, `ip` VARCHAR(15) NOT NULL, `port` VARCHAR(30) NOT NULL, `analyses`,PRIMARY KEY (`id`, `ip`))");
+			if(!$proxiesQuery)
+			die("Nie można było utworzyć tabeli `proxies`");
+
+			$analysesQuery = Db::query("CREATE TABLE IF NOT EXISTS `analyses` (`id` TINYINT UNSIGNED NOT NULL, `domain` VARCHAR(75) NOT NULL, `phrase` VARCHAR(200) NOT NULL, PRIMARY KEY (`id`))");
+			if(!$analysesQuery)
+				die("Nie można było utworzyć tabeli `analyses`");
+			
+			die("true");
 		}
 		else
 			die("Baza danych '$dbName' nie istnieje.");
