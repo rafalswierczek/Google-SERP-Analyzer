@@ -86,6 +86,8 @@ class Db
 			{
 				switch($returnOption)
 				{
+					case "fetch":
+						return $stmt->fetch(PDO::FETCH_ASSOC);
 					case "fetchAll":
 						return $stmt->fetchAll(PDO::FETCH_ASSOC);
 					case "fetchColumn":
