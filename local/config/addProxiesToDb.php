@@ -13,7 +13,7 @@ if(isset($_POST['proxy1Ip']))
 		$proxies = array();
 		foreach($queryResult as $row)
 		{
-			$proxies[$row['id']] = array("ip" => $row['ip'], "port" => $row['port']);
+			$proxies[$row['proxy_id']] = array("ip" => $row['ip'], "port" => $row['port']);
 		}
 	
 
@@ -49,7 +49,7 @@ if(isset($_POST['proxy1Ip']))
 
 		if(count($deleteRows) > 0)
 		{
-			$queryString = "DELETE FROM `proxies` WHERE id IN (";
+			$queryString = "DELETE FROM `proxies` WHERE proxy_id IN (";
 
 			foreach($deleteRows as $index => $id)
 			{
@@ -68,7 +68,7 @@ if(isset($_POST['proxy1Ip']))
 
 		if(count($insertRows) > 0)
 		{
-			$queryString = "INSERT INTO `proxies` (id, ip, port) VALUES ";
+			$queryString = "INSERT INTO `proxies` (proxy_id, ip, port) VALUES ";
 
 			foreach($insertRows as $id)
 			{

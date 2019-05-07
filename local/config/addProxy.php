@@ -23,7 +23,7 @@
 		$proxies = array();
 		foreach($queryResult as $row)
 		{
-			$proxies[$row['id']] = array("ip" => $row['ip'], "port" => $row['port']);
+			$proxies[$row['proxy_id']] = array("ip" => $row['ip'], "port" => $row['port']);
 		}
 	}
 
