@@ -1,0 +1,37 @@
+*
+{
+    margin: 0;
+    padding: 0;
+}
+
+#proxies
+{
+    /*transition: 1s;*/
+}
+
+.saved
+{
+    background: rgba(0,255,0,0.4); /* problem z kolorem saved */
+    cursor: not-allowed;
+}
+
+.cleared
+{
+    background: rgba(255, 128, 128, 0.4);
+    cursor: not-allowed;
+}
+
+.edit
+{
+    background: rgba(220,220,220,0.4);
+}
+
+.error
+{
+    background: rgba(255,0,0,0.4);
+}
+
+.proxyInput
+{
+    border: 1px solid black;
+}
