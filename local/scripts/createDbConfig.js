@@ -1,23 +1,28 @@
+const scriptPath = document.currentScript.src;
+const currentDir = scriptPath.substring(0, scriptPath.lastIndexOf('/'))+"/";
+
 window.addEventListener("load", function()
 {
 	const formDbConfig = document.querySelector("#formDbConfig");
 	formDbConfig.addEventListener("submit", async function(e)
 	{
 		e.preventDefault();
-		const response = await fetch("createDbConfig.php", {method: "POST", body: new FormData(this)});
-		const responseData = await response.text();
+		const response = await fetch(currentDir+"../ajax/createDbConfig.php", {method: "POST", body: new FormData(this)});
+		const responseData = await response.json();
 		
-		if(responseData === "true")
+		if(responseData['type'] === "result")
 		{
-			console.log("Utworzono połączenie z bazą danych."); // implementacja prostego systemu powiadomień
+			console.log(responseData['body']); // implementacja prostego systemu powiadomień
 			setTimeout(function()
 			{
 				location = "addProxy.php";
-			}, 2000);
+			}, 2500);
+		}
+		else if(responseData['type'] === "error")
+		{
+			console.error(responseData['body']); // implementacja prostego systemu powiadomień
 		}
 		else
-		{
-			console.error("Error: " + responseData); // implementacja prostego systemu powiadomień
-		}
+			console.error(responseData);
 	});
 });
