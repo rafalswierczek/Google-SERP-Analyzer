@@ -1,3 +1,4 @@
+Options -Indexes
 Options +FollowSymLinks
 RewriteEngine On
 RewriteRule ^/*$ /gsa/local/views/index/index.php [R=301,L]
