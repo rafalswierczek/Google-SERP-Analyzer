@@ -8,7 +8,7 @@ class Db
 	private $_dbUser;
 	private $_dbPassword;
 	
-	public function __construct($dbHost, $dbName, $dbUser, $dbPassword)
+	public function __construct($dbHost, $dbName, $dbUser, $dbPassword = null)
 	{
 		$this->_dbHost = $dbHost;
 		$this->_dbName = $dbName;
@@ -34,7 +34,7 @@ class Db
 			throw new Exception("Plik `db.ini` nie istnieje");
 
 		$dbConfig = parse_ini_file($path);
-		if(!empty($dbConfig['server']) && !empty($dbConfig['database']) && !empty($dbConfig['user']) && !empty($dbConfig['password']))
+		if(!empty($dbConfig['server']) && !empty($dbConfig['database']) && !empty($dbConfig['user']))
 			return $dbConfig;
 		else
 			throw new Exception("Plik `db.ini` posiada złą zawartość.");
@@ -43,7 +43,12 @@ class Db
 	public function setContext()
 	{
 		if(self::$_db === null)
-			self::$_db = new PDO("mysql:host=".$this->_dbHost.";dbname=".$this->_dbName, $this->_dbUser, $this->_dbPassword);
+		{
+			if(!empty($this->_dbPassword))
+				self::$_db = new PDO("mysql:host=".$this->_dbHost.";dbname=".$this->_dbName, $this->_dbUser, $this->_dbPassword);
+			else
+				self::$_db = new PDO("mysql:host=".$this->_dbHost.";dbname=".$this->_dbName, $this->_dbUser);
+		}
 		else
 			throw new Exception("Only one instance allowed.");
 	}
@@ -53,7 +58,10 @@ class Db
 		if(self::$_db === null)
 		{
 			$dbConfig = self::getDbIni($iniConfigPath);
-			self::$_db = new PDO("mysql:host={$dbConfig['server']};dbname={$dbConfig['database']}", $dbConfig['user'], $dbConfig['password']);
+			if(!empty($dbConfig['password']))
+				self::$_db = new PDO("mysql:host={$dbConfig['server']};dbname={$dbConfig['database']}", $dbConfig['user'], $dbConfig['password']);
+			else
+				self::$_db = new PDO("mysql:host={$dbConfig['server']};dbname={$dbConfig['database']}", $dbConfig['user']);
 		}
 		else
 			throw new Exception("Only one instance allowed.");

@@ -53,7 +53,10 @@ if(!empty($_POST['proxy']))
 		{
 			if(!empty($row['ip']) && !empty($row['port']) && !empty($row['user']) && !empty($row['password']))
 			{
-				$insertRows[] = array("proxy_id" => $row['proxy_id'], "ip" => $row['ip'], "port" => $row['port'], "user" => $row['user'], "password" => $row['password']);	
+				if(filter_var($row['ip'], FILTER_VALIDATE_IP))
+					$insertRows[] = array("proxy_id" => $row['proxy_id'], "ip" => $row['ip'], "port" => $row['port'], "user" => $row['user'], "password" => $row['password']);
+				else
+					die(jsonMessage("error", "Nie można dodać adresu proxy z id: {$row['proxy_id']}, ponieważ posiada zły format IP"));
 			}
 		}
 			
