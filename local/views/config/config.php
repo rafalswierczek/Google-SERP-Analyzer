@@ -42,7 +42,7 @@
 	<input id="dbUser" type="text" name="dbUser" value="<?php if(isset($dbIni)){echo $dbIni["user"];} ?>" required><br>
 
 	<label for="dbPassword">Hasło użytkownika bazy danych</label>
-	<input id="dbPassword" type="password" name="dbPassword" autocomplete="new-password" value="<?php if(isset($dbIni)){echo $dbIni["password"];} ?>" required><br>
+	<input id="dbPassword" type="password" name="dbPassword" autocomplete="new-password" value="<?php if(isset($dbIni)){echo $dbIni["password"];} ?>"><br>
 
 	<button id="submit">Zapisz</button>
 </form>
