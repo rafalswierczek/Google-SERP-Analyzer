@@ -3,14 +3,14 @@
 <head>
 	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Tytuł</title>
+	<title>Konfiguracja aplikacji - DB</title>
 	<meta name="description" content="Opis strony...">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../../styles/config.css">
 	<script src="../../scripts/createDbConfig.js"></script>
 </head>
 <body>
-<a href="../index/index.php">Logo? / Strona główna</a><br>
+<a href="../index/index.php">Strona główna</a><br>
 
 <?php
 
@@ -24,12 +24,10 @@
 	{
 		//echo $e->getMessage();
 	}
-	
-
 ?>
 
-<h1>Konfiguracja aplikacji</h1>
-<p>Połączenie z lokalną bazą danych</p>
+<h1 class="header">Konfiguracja aplikacji</h1>
+<p class="description">Połączenie z lokalną bazą danych</p>
 
 <form id="formDbConfig" action="" method="POST">
 	<label for="dbServer">Adres serwera bazy danych</label>

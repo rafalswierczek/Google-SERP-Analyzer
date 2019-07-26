@@ -1,38 +1,5 @@
 <?php
 
-// &num=100 nie daje realnych wyników
-// todo: wdrożyć requestowanie paginacji serp
-// stary cron to 100% realności + nie zwiększa ryzyka bana, gdyż requestowana jest ta sama fraza, a zmienia się tylko &start=
-// kod:
-/*
-for() // dla wszystkich analiz
-{
-    $j = 0;
-    $lastPos = 0;
-    $pages = "";
-    $next_page = true;
-    while($next_page) // dla danej frazy
-    {
-        $c = curl_init();
-        ...
-        curl_setopt($c, CURLOPT_URL, "https://www.google.com/search?q=".str_replace(" ", "+", $config_table[$i]['phrase'])."&ie=utf-8&oe=utf-8&start=".($j*10)."&client=firefox-b-ab");
-
-        $pages .= curl_exec($c);
-        if (($lastPos = strpos($pages, 'left:53px', $lastPos+100)) === false || $j === 9) // jeżeli nie istnieje element <span >Następna</span> lub badana jest 10-ta strona
-        {
-            $next_page = false;
-        }
-        $j++;
-        curl_close($c);
-
-        $rand = mt_rand(2,6);
-        $sleeptime += $rand;
-        sleep($rand);
-    }
-...
-}
-*/
-
 $start = microtime(true);
 $sleeptime = 0;
 
@@ -41,6 +8,7 @@ require_once "libs/db.php";
 Db::setContextFromFile("db.ini");
 $query = <<<QUERY
 SELECT
+    a.analysis_id,
 	a.domain,
 	a.phrase,
 	a.country_code,
@@ -133,9 +101,8 @@ foreach($analysesResult as $analysis)
                 $date = date('Y-m-d');
                 $time = date("H:i:s");
                 $position = $d+1;
-
-                $executeArray = array($analysis['domain'], $analysis['phrase'], $position, $date, $time);
-                Db::query("INSERT INTO `datastorage` (domain,phrase,position,date,time) VALUES (?, ?, ?, ?, ?)", $executeArray);
+                $executeArray = [$analysis['analysis_id'], $position, $date, $time];
+                Db::query("INSERT INTO `datastorage` (analysis_id, position, date, time) VALUES (?, ?, ?, ?)", $executeArray);
                 break;
             }
         }
