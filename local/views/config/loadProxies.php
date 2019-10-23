@@ -1,5 +1,6 @@
 <?php
 
+require_once "../../libs/simpleDOM.php";
 require_once "../../libs/db.php";
 
 Db::setContextFromFile("../../db.ini");
@@ -14,9 +15,7 @@ foreach($queryResult as $row)
 
 if(!empty($proxies))
 {
-	require_once "../../libs/simpleDOM.php";
-
-	$formProxy  = new Form("", "POST", null, "formProxy");
+	$formProxy = new Form("", "POST", null, "formProxy");
 
 	for($i = 0; $i < 10; $i++)
 	{

@@ -1,23 +1,5 @@
 <?php
 
-// class Document
-// {
-// 	private $html;
-
-// 	public function __construct($request_uri)
-// 	{
-// 		$this->html = file_get_contents($request_uri);
-// 	}
-
-// 	public function getElementById($request_uri, $id)
-// 	{
-		
-// 		preg_match("/id=\"$id\"|id = \"$id\"|id= \"$id\"|id =\"$id\"/", $html, $matches); // id="" | id = "" | id= "" | id =""
-// 		$idPos = strpos($html, $matches[0]);
-// 		//$startPos = 
-// 	}
-// }
-
 abstract class Element
 {
 	protected $tagName;
@@ -123,5 +105,61 @@ class Button extends Element
 		$this->type = $type;
 		$this->dataset = $dataset;
 		parent::__construct($this, "button", $id, $class, $innerHTML, "</button>");
+	}
+}
+
+class Table extends Element
+{
+	public function __construct($id = null, $class = null)
+	{
+		parent::__construct($this, "table", $id, $class, null, "</table>");
+	}
+}
+
+class THead extends Element
+{
+	public function __construct($id = null, $class = null)
+	{
+		parent::__construct($this, "thead", $id, $class, null, "</thead>");
+	}
+}
+
+class TBody extends Element
+{
+	public function __construct($id = null, $class = null)
+	{
+		parent::__construct($this, "tbody", $id, $class, null, "</tbody>");
+	}
+}
+
+class TFoot extends Element
+{
+	public function __construct($id = null, $class = null)
+	{
+		parent::__construct($this, "tfoot", $id, $class, null, "</tfoot>");
+	}
+}
+
+class Tr extends Element
+{
+	public function __construct($id = null, $class = null)
+	{
+		parent::__construct($this, "tr", $id, $class, null, "</tr>");
+	}
+}
+
+class Td extends Element
+{
+	public function __construct($id = null, $class = null, $innerHTML = null)
+	{
+		parent::__construct($this, "td", $id, $class, $innerHTML, "</td>");
+	}
+}
+
+class Th extends Element
+{
+	public function __construct($id = null, $class = null, $innerHTML = null)
+	{
+		parent::__construct($this, "th", $id, $class, $innerHTML, "</th>");
 	}
 }
