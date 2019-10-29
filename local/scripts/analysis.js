@@ -64,9 +64,26 @@ async function fetchAnalyses()
                 const  analysis = createAnalisis(row);
                 document.querySelector("#analyses").appendChild(analysis);
 
-                analysis.addEventListener("click", function()
+                analysis.addEventListener("click", async function()
                 {
-                    // tworzy wykres
+                    let id = analysis.querySelector(".analysisId").innerHTML;
+                    let formData = new FormData();
+                    formData.append('analysis_id', id);
+                    const response = await fetch(currentDir+"../ajax/getChartData.php", {
+                        method: 'POST',
+                        body: formData
+                    });
+                    const responseData = await response.json();
+
+                    if(typeof responseData === "string")
+                    {
+                        let chart = document.getElementById("chart");
+                        chart.style.marginTop = "50px";
+                        chart.style.textAlign = "center";
+                        chart.innerHTML = responseData;
+                    }
+                    else
+                        newChart(analysis.querySelector(".domain").innerHTML, responseData, responseData[0][0], responseData[responseData.length-1][0]);
                 });
             });
         }
@@ -148,4 +165,122 @@ function createAnalisis(row)
     });
     
     return analysis;
+}
+
+function newChart(name, values, dataLimitFrom, dataLimitTo, from=null, to=null)
+{
+    var t = new TimeChart(
+    {
+        container: document.getElementById("chart"),
+
+        data:[
+        {
+            id: "data",
+            units:["m"],
+            timestampInSeconds: true,
+            preloaded: {
+                unit: "m",
+                values: values,
+                dataLimitFrom: dataLimitFrom,
+                dataLimitTo: dataLimitTo,
+                from: from,
+                to: to
+            }
+        }],
+
+        timeAxis: {
+            timeZone: "Europe/Warsaw",
+        },
+
+        series:[
+        {
+            name: name,
+            type:"line",
+            data:
+            {
+                source: "data",
+                index:1,
+                aggregation:"avg"
+            },
+            style:
+            {
+                smoothing: true,
+                lineColor: "#3F7598",
+                lineWidth: 1,
+                marker:
+                {
+                    fillColor: "#2A4C62",
+                    shape: "circle",
+                    width: 8
+                }
+            }
+        }],
+
+        toolbar:
+        {
+            location: "outside",
+            fullscreen: true,
+            items: [
+                {
+                    label: "export",
+                    align: "right",
+                    cssClass: "DVSL-bar-btn-export",
+                    dropDownItems: [
+                        {
+                            label: "Obraz (PNG)",
+                            onClick: function () { t.export("png"); }
+                        },
+                        {
+                            label: "Obraz (JPG)",
+                            onClick: function () { t.export("jpg"); }
+                        },
+                        {
+                            label: "Dokument (PDF)",
+                            onClick: function () { t.export("pdf"); }
+                        },
+                        {
+                            label: "Excel (XLSX)",
+                            onClick: function () { t.export("xlsx"); }
+                        }
+                    ]
+                },
+                { item: "fullscreen", align: "right" }
+            ]
+        },
+
+        valueAxisDefault:
+        {
+            scaleStep: 1,
+            style:
+            {
+                title: { textStyle: { font: "15px consolas"}, align: "center", margin: 0 },
+                valueLabel: { textStyle: { font: "15px consolas", fillColor: "#2A4C62"}}
+            },
+            title:"Pozycja"
+        },
+
+        area:
+        {
+            minHeight: 400
+        },
+
+        interaction:
+        {
+            scrolling:
+            {
+                kineticFriction: 0.00001
+            },
+            selection:
+            {
+                enabled: false
+            },
+            zooming:
+            {
+                swipe: false,
+                click: false,
+                wheel: true,
+                wheelSensitivity: 1.2,
+            }
+        }
+    });
 }

@@ -12,7 +12,7 @@ if(!empty($_GET['fetch']) && $_GET['fetch'] === "true")
         Db::setContextFromFile("../db.ini");
         $queryResult = Db::query("SELECT * FROM `analyses`", null, "fetchAll");
         Db::close();
-
+        
         echo jsonMessage("result", $queryResult);
     }
     catch(Exception $e)

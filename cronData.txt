@@ -1,0 +1,13 @@
+3 analizy:
+
+execution time: 2.9630229473114s
+sleep time: 48s
+overall time: 50.963022947311s
+
+execution time: 2.5231721401215s
+sleep time: 34s
+overall time: 36.523172140121s
+
+execution time: 2.999195098877s
+sleep time: 41s
+overall time: 43.999195098877s
